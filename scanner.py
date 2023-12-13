@@ -24,6 +24,8 @@ class Token:
 
 
 class Scanner:
+    tokens: list[Token]
+
     def __init__(self, source: str):
         self.source = source
         self.start = 0
@@ -64,7 +66,7 @@ class Scanner:
             case '"':
                 self.add_string()
             case "-":
-                if self.peek_next().isdigit():
+                if self.peek().isdigit():
                     self.advance()
                     self.add_number()
                 else:

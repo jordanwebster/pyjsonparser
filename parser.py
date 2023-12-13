@@ -3,6 +3,7 @@ from typing import Union
 
 from scanner import Scanner, Token, TokenType
 
+
 JsonValue = Union["JsonObject", "JsonArray", str, int, float, bool, NoneType]
 JsonObject = dict[str, JsonValue]
 JsonArray = list[JsonValue]
@@ -36,7 +37,7 @@ class Parser:
                 raise ValueError("Unexpected token", token)
 
     def parse_object(self) -> JsonObject:
-        json_object = {}
+        json_object: JsonObject = {}
 
         key_token = self.advance()
         while key_token.token_type != TokenType.RIGHT_BRACE:
@@ -57,7 +58,7 @@ class Parser:
         return json_object
 
     def parse_array(self) -> JsonArray:
-        json_array = []
+        json_array: JsonArray = []
 
         token = self.advance()
         while token.token_type != TokenType.RIGHT_BRACKET:
@@ -84,7 +85,6 @@ class Parser:
 
     def consume_comma_unless(self, exception: TokenType):
         if self.peek().token_type == TokenType.COMMA:
-            # We allow trailing commas
             self.advance()
             return
 
